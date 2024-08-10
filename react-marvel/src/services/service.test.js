@@ -1,5 +1,6 @@
-import { doesNotContainSubstring, generateHash, buildRequestParameters, buildApiEndpoint } from './services.js';
+import { doesNotContainSubstring, generateHash, buildRequestParameters, buildApiEndpoint, filterMarvelsWithoutThumbnail, buildAuthenticationParameters } from './services.js';
 import environment from '../environment/environment.js';
+import marvelData from '../assets/offlineMarvels.json';
 
 
 describe('Check helper services', () => {
@@ -29,18 +30,32 @@ describe('Check helper services', () => {
         const hash = 'random_string';
         const timeStamp = new Date().getTime();
         const parametersString = buildRequestParameters(timeStamp, hash, publicKey);
-        const expectedString = `ts=${timeStamp}&apikey=${publicKey}&hash=${hash}`;
+        const expectedString = `?ts=${timeStamp}&apikey=${publicKey}&hash=${hash}`;
         expect(parametersString).toBe(expectedString);
     });
 
     it('creates correct Endpoint to get Marvels', async () => {
         const endpoint = buildApiEndpoint();
-
+        console.log(endpoint);
         let response = await fetch(endpoint);
         const marvels = await response.json();
 
         expect(marvels.data.results[0]).not.toBeNull();
-    })
+    });
+
+    it('selects the characters which has thumbnails', async () => {
+
+        const marvelWithThumbnail = filterMarvelsWithoutThumbnail(marvelData.data.results);
+        expect(marvelWithThumbnail.length).toBeGreaterThan(0);
+
+        const { id, thumbnail, thumbnailExtention, name } = marvelWithThumbnail[0];
+        console.log(id);
+        expect(id).not.toBeNull();
+        expect(name).not.toBeNull();
+        const response = await fetch(thumbnail + '.' + thumbnailExtention + buildAuthenticationParameters());
+        expect(response.status).toBe(200);
+
+    });
 
 
 

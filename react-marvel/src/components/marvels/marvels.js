@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Marvel from "../marvel/marvel";
 import marvelData from '../../assets/offlineMarvels.json';
+import {filterMarvelsWithoutThumbnail} from '../../services/services';
 
 const Marvels = () => {
   let [marvels, setMarvels] = useState([]);
@@ -12,6 +13,7 @@ const Marvels = () => {
   let getMarvels = async () => {
 
     console.log(marvelData.data.results);
+    filterMarvelsWithoutThumbnail(marvelData.data.results);
     setMarvels(marvelData.data.results);
   };
 

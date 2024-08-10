@@ -16,19 +16,24 @@ export function generateHash(publicKey, privateKey, timeStamp) {
 
 
 export function buildRequestParameters(timeStamp, hash, apikey) {
-    return `ts=${timeStamp}&apikey=${apikey}&hash=${hash}`
+    return `?ts=${timeStamp}&apikey=${apikey}&hash=${hash}`
 }
 
 export function buildApiEndpoint() {
-    const { protocol, baseUrl, publicKey, privateKey } = environment();
+    const { protocol, baseUrl } = environment();
+    const parameters = buildAuthenticationParameters();
+    const apiPath = 'v1/public/characters';
+
+    return protocol + baseUrl + 'v1/public/characters' + parameters;
+    //`${protocol}${baseUrl}${apiPath}${parameters}`;
+}
+
+export const buildAuthenticationParameters = () => {
+    const { publicKey, privateKey } = environment();
     let timeStamp = new Date().getTime();
     const hash = generateHash(publicKey, privateKey, timeStamp);
 
-    const parameters = buildRequestParameters(timeStamp, hash, publicKey);
-    const apiPath = 'v1/public/characters?';
-
-    return protocol + baseUrl + 'v1/public/characters?' + parameters;
-    //`${protocol}${baseUrl}${apiPath}${parameters}`;
+    return buildRequestParameters(timeStamp, hash, publicKey);
 }
 
 export function randomlySelectMarvels(marvelWithThumbnail) {
@@ -40,14 +45,23 @@ export function randomlySelectMarvels(marvelWithThumbnail) {
     return randomlySelectedMarvel;
 }
 
-export function filterMarvelsWithoutThumbnail(responseData) {
+export function filterMarvelsWithoutThumbnail(characters) {
     let marvelWithThumbnail = [];
-    for (let i = 0; i < 100; i++) {
-        let name = responseData['data']['results'][i]['name'];
-        let thumbnailOfMarvel = responseData['data']['results'][i]['thumbnail']['path'];
+    const limit = Math.min(characters.length, 100);
+    for (let i = 0; i < limit; i++) {
+        let name = characters[i].name;
+        let thumbnailOfMarvel = characters[i].thumbnail.path;
         let validMarvel = doesNotContainSubstring(thumbnailOfMarvel, "image_not_available");
         if (validMarvel) {
-            marvelWithThumbnail.push(new Marvel(name, thumbnailOfMarvel + "/portrait_xlarge.jpg"));
+
+            const marvel = {
+                id: characters[i].id,
+                thumbnail: characters[i].thumbnail.path,
+                thumbnailExtention: characters[i].thumbnail.extension,
+                description: characters[i].description,
+                name: characters[i].name
+            };
+            marvelWithThumbnail.push(marvel);
         }
     }
     return marvelWithThumbnail;
