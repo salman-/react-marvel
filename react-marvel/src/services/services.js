@@ -7,11 +7,9 @@ export function doesNotContainSubstring(mainString, substring) {
     return mainString.indexOf(substring) === -1;
 }
 
-export function generateHash() {
-    let { publicKey, privateKey } = environment();
-    const timestampInMilliseconds = new Date().getTime();
+export function generateHash(publicKey, privateKey, timeStamp) {
 
-    let input = `${timestampInMilliseconds}${privateKey.trim()}${publicKey.trim()}`;
+    let input = `${timeStamp}${privateKey.trim()}${publicKey.trim()}`;
 
     return CryptoJS.MD5(input).toString(CryptoJS.enc.Hex);
 }
@@ -22,10 +20,9 @@ export function buildRequestParameters(timeStamp, hash, apikey) {
 }
 
 export function buildApiEndpoint() {
-    const { protocol, baseUrl, publicKey } = environment();
-    
+    const { protocol, baseUrl, publicKey, privateKey } = environment();
     let timeStamp = new Date().getTime();
-    const hash = generateHash();
+    const hash = generateHash(publicKey, privateKey, timeStamp);
 
     const parameters = buildRequestParameters(timeStamp, hash, publicKey);
     const apiPath = 'v1/public/characters?';

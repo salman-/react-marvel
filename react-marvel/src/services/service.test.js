@@ -16,17 +16,18 @@ describe('Check helper services', () => {
     });
 
     it('generated Hash cannot be null', () => {
-        const hash = generateHash();
-        expect(hash).not.toBeNull()
+        const { publicKey } = environment();
+        let timeStamp = 1723293215578;
+        const privateKey = 'private_key_string';
+
+        const hash = generateHash(publicKey, privateKey, timeStamp);
+        expect(hash).toBe('7018596388424e3848221f7059c59f7b')
     });
 
     it('builds the request parameters correctly', () => {
-        const env = environment();
-        expect(env).toHaveProperty('publicKey', '1098114a1b4e71641fb1e0a0184afbcf');
-        const { publicKey } = environment();
-        let timeStamp = new Date().getTime();
-        const hash = generateHash();
-
+        const publicKey = 'random_key';
+        const hash = 'random_string';
+        const timeStamp = new Date().getTime();
         const parametersString = buildRequestParameters(timeStamp, hash, publicKey);
         const expectedString = `ts=${timeStamp}&apikey=${publicKey}&hash=${hash}`;
         expect(parametersString).toBe(expectedString);
@@ -37,7 +38,7 @@ describe('Check helper services', () => {
 
         let response = await fetch(endpoint);
         const marvels = await response.json();
-        
+
         expect(marvels.data.results[0]).not.toBeNull();
     })
 
