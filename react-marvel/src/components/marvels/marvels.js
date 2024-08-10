@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Marvel from "../marvel/marvel";
+import marvelData from '../../assets/offlineMarvels.json';
 
 const Marvels = () => {
   let [marvels, setMarvels] = useState([]);
@@ -9,24 +10,41 @@ const Marvels = () => {
   }, []);
 
   let getMarvels = async () => {
-    const response = await fetch("http://localhost:5000/marvels");
-    const data = await response.json();
-    console.log(data);
-    setMarvels(data);
+
+    console.log(marvelData.data.results);
+    setMarvels(marvelData.data.results);
   };
 
   return (
     <div data-testid="marvels">
       <h2>Marvels Component!!!</h2>
-      <div>
-        {marvels.length > 0 &&
-          marvels.map(marvel => {
-            return (
-              <Marvel id={marvel.data.results[0].id} name={marvel.data.results[0].name} description={marvel.data.results[0].description} />
-            );
-          })}
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="https://via.placeholder.com/400x300" alt="Image 1" class="img-responsive img-thumbnail"/>
+          </div>
+          <div class="col-md-4">
+            <img src="https://via.placeholder.com/400x300" alt="Image 2" class="img-responsive img-thumbnail"/>
+          </div>
+          <div class="col-md-4">
+            <img src="https://via.placeholder.com/400x300" alt="Image 3" class="img-responsive img-thumbnail"/>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <img src="https://via.placeholder.com/400x300" alt="Image 4" class="img-responsive img-thumbnail"/>
+          </div>
+          <div class="col-md-4">
+            <img src="https://via.placeholder.com/400x300" alt="Image 5" class="img-responsive img-thumbnail"/>
+          </div>
+          <div class="col-md-4">
+            <img src="https://via.placeholder.com/400x300" alt="Image 6" class="img-responsive img-thumbnail"/>
+          </div>
+        </div>
       </div>
     </div>
+
+
   );
 };
 
