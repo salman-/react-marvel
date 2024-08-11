@@ -25,7 +25,14 @@ export function buildApiEndpoint() {
     const apiPath = 'v1/public/characters';
 
     return protocol + baseUrl + 'v1/public/characters' + parameters;
-    //`${protocol}${baseUrl}${apiPath}${parameters}`;
+}
+
+export function buildThumbnailPath(thumbnailPath, thumbnailExtention) {
+    
+    const parameters = buildAuthenticationParameters();
+    const thumbnailUrl = thumbnailPath +"."+ thumbnailExtention + parameters;
+    console.log('thumbnailUrl: ' + thumbnailUrl);
+    return thumbnailUrl;
 }
 
 export const buildAuthenticationParameters = () => {
