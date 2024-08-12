@@ -31,7 +31,6 @@ export function buildThumbnailPath(thumbnailPath, thumbnailExtention) {
     
     const parameters = buildAuthenticationParameters();
     const thumbnailUrl = thumbnailPath +"."+ thumbnailExtention + parameters;
-    console.log('thumbnailUrl: ' + thumbnailUrl);
     return thumbnailUrl;
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import marvelData from '../../assets/offlineMarvels.json';
 import { filterMarvelsWithoutThumbnail, buildThumbnailPath } from '../../services/services';
+import Marvel from "../marvel/marvel";
 
 const Marvels = () => {
   const [marvels, setMarvels] = useState([]);
@@ -10,27 +11,19 @@ const Marvels = () => {
   }, []);
 
   const getMarvels = async () => {
-    console.log(marvelData.data.results);
     const filteredMarvels = filterMarvelsWithoutThumbnail(marvelData.data.results);
     setMarvels(filteredMarvels);
   };
 
   return (
     <div data-testid="marvels">
-      <h2>Marvels Component!!!</h2>
       <div className="container">
         <div className="row">
           {marvels.map((marvel, index) => {
-            const { thumbnail, thumbnailExtention, name } = marvel;
-
+            const { thumbnail, thumbnailExtention, name, id } = marvel;
             return (
-              <div key={index} className="col-md-4">
-                <img
-                  src={buildThumbnailPath(thumbnail, thumbnailExtention)}
-                  alt={name}
-                  className="img-responsive img-thumbnail"
-                />
-                <h3>{name}</h3>
+              <div data-testid={`marvelId-${index}`} className="col-md-4">
+                <Marvel name={name} thumbnail={buildThumbnailPath(thumbnail, thumbnailExtention)} id={id} dataTestid={index} />
               </div>
             );
           })}
