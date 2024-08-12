@@ -36,7 +36,6 @@ describe('Check helper services', () => {
 
     it('creates correct Endpoint to get Marvels', async () => {
         const endpoint = buildApiEndpoint();
-        console.log(endpoint);
         let response = await fetch(endpoint);
         const marvels = await response.json();
 
@@ -49,7 +48,6 @@ describe('Check helper services', () => {
         expect(marvelWithThumbnail.length).toBeGreaterThan(0);
 
         const { id, thumbnail, thumbnailExtention, name } = marvelWithThumbnail[0];
-        console.log(id);
         expect(id).not.toBeNull();
         expect(name).not.toBeNull();
         const response = await fetch(thumbnail + '.' + thumbnailExtention + buildAuthenticationParameters());

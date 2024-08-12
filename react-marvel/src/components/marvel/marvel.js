@@ -1,11 +1,17 @@
-const Marvel = ({id,name,description})=>{
-    return(
+
+const Marvel = ({ name, thumbnail, id, dataTestid }) => {
+    return (
+
         <div>
-            <div key={id}>
-                <div>Name: {name}</div>
-                <div>Description: {description}</div>
-              </div>
+            <img
+                src={thumbnail}
+                alt={name}
+                className="img-responsive img-thumbnail"
+                data-testid={`marvel-image-${dataTestid}`}
+            />
+            <h3 data-testid={`marvel-name-${dataTestid}`}>{name}</h3>
         </div>
+
     );
 }
 
