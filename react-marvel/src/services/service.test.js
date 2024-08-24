@@ -1,4 +1,5 @@
-import { doesNotContainSubstring, generateHash, buildRequestParameters, buildApiEndpoint, filterMarvelsWithoutThumbnail, buildAuthenticationParameters } from './services.js';
+import { generateHash, buildRequestParameters, buildApiEndpoint, buildAuthenticationParameters } from './services.js';
+import { filterMarvelsWithoutThumbnail, doesNotContainSubstring } from './marvelService.js';
 import environment from '../environment/environment.js';
 import marvelData from '../assets/offlineMarvels.json';
 

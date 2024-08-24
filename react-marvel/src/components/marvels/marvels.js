@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import marvelData from '../../assets/offlineMarvels.json';
-import { filterMarvelsWithoutThumbnail, buildThumbnailPath } from '../../services/services';
+import { filterMarvelsWithoutThumbnail } from '../../services/marvelService';
+import { buildThumbnailPath } from '../../services/services';
 import Marvel from "../marvel/marvel";
 
 const Marvels = () => {
@@ -11,8 +12,8 @@ const Marvels = () => {
   }, []);
 
   const getMarvels = async () => {
-    const filteredMarvels = filterMarvelsWithoutThumbnail(marvelData.data.results);
-    setMarvels(filteredMarvels);
+    const marvelsWithThumbnail = filterMarvelsWithoutThumbnail(marvelData.data.results);
+    setMarvels(marvelsWithThumbnail);
   };
 
   return (
