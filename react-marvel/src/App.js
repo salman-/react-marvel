@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import logo from "./logo.svg";
 import "./App.css";
 import Marvels from "./components/marvels/marvels";
 import Marvel from "./components/marvel/marvel";
@@ -17,7 +16,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <RouterProvider router={router} id='marvels' />
   );
 }
 
