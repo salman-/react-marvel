@@ -25,7 +25,7 @@ const Marvels = () => {
           {marvels.map((marvel, index) => {
             const { thumbnail, thumbnailExtention, name, id } = marvel;
             return (
-              <div data-testid={`marvelId-${index}`} className="col-md-4">
+              <div key={id} data-testid={`marvelId-${index}`} className="col-md-4">
                 <Marvel characterName ={name} thumbnail={buildThumbnailPath(thumbnail, thumbnailExtention)} id={id} dataTestid={index} />
               </div>
             );
