@@ -3,51 +3,39 @@ import { useState, useEffect } from "react";
 import { buildApiEndpoint, buildThumbnailPath } from "./../../services/services";
 import path from "./../../services/endpointsPath";
 
-const Marvel = ({ name: propName, thumbnail: propThumbnail, id: propId, dataTestid }) => {
-    const [marvel, setMarvel] = useState({ name: propName, thumbnail: propThumbnail }); // Initial state with props
-    const { id: routeId } = useParams();  // Get the 'id' from the route parameters
-    const id = propId || routeId;  // Use 'propId' if available, otherwise 'routeId'
+const Marvel = () => {
+    const [character, setCharacter] = useState({}); // Initial state with props
+    const { id } = useParams();  // Get the 'id' from the route parameters
 
     useEffect(() => {
-        if (id && (!propName || !propThumbnail)) {  // Fetch only if props not provided
-            getMarvel(id);
+        if (id) {
+            getCharacter(id);
         }
-    }, [id, propName, propThumbnail]);
+    }, [id]);
 
-    const getMarvel = async (id) => {
+    const getCharacter = async (id) => {
         const { getCharacterById } = path();
         let api = buildApiEndpoint(getCharacterById);
         api = api.replace("{characterId}", id);
-        console.log(`api: ${api}`);
 
-        try {
-            const response = await fetch(api);
-            const jsonData = await response.json();
-            console.log(jsonData.data.results);
+        const response = await fetch(api);
+        const jsonData = await response.json();
+        const marvel = jsonData.data.results[0];
 
-            if (jsonData.data.results.length > 0) {
-                const character = jsonData.data.results[0]; // Assuming the first result is correct
-                const characterName = character.name; // Changed 'name' to 'characterName'
-                const characterThumbnail = buildThumbnailPath(character.thumbnail.path, character.thumbnail.extension); // Constructing thumbnail URL
-
-                setMarvel({ name: characterName, thumbnail: characterThumbnail });
-            }
-        } catch (error) {
-            console.error("Error fetching Marvel character:", error);
-        }
+        const characterName = marvel.name;
+        const characterThumbnail = buildThumbnailPath(marvel.thumbnail.path, marvel.thumbnail.extension); // Constructing thumbnail URL
+        setCharacter({ characterName, characterThumbnail });
     };
+
+    const { characterName, characterThumbnail } = character;
 
     return (
         <div data-testid={`marvel-link-${id}`}>
+            <h2>{characterName}</h2>
             <Link to={`/marvels/${id}`}>
-                <img
-                    src={marvel.thumbnail}
-                    alt={marvel.name} // Changed 'name' to 'marvel.name'
-                    className="img-responsive img-thumbnail"
-                    data-testid={`marvel-image-${dataTestid}`}
-                />
+                <img src={characterThumbnail} className="img-responsive img-thumbnail" />
             </Link>
-            <h3 data-testid={`marvel-name-${dataTestid}`}>{marvel.name}</h3> {/* Changed 'name' to 'marvel.name' */}
+
         </div>
     );
 };
