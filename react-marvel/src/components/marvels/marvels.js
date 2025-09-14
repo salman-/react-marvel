@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import marvelData from '../../assets/offlineMarvels.json';
-import { filterMarvelsWithoutThumbnail } from '../../services/marvelService';
-import { buildThumbnailPath } from '../../services/services';
-import Marvel from "../marvel/marvel";
+import marvelData from "../../assets/offlineMarvels.json";
+import { filterMarvelsWithoutThumbnail } from "../../services/marvelService";
+import { buildThumbnailPath } from "../../services/services";
+import "./Marvels.css";
 
 const Marvels = () => {
   const [marvels, setMarvels] = useState([]);
@@ -13,36 +13,45 @@ const Marvels = () => {
   }, []);
 
   const getMarvels = async () => {
-    const marvelsWithThumbnail = filterMarvelsWithoutThumbnail(marvelData.data.results);
+    const marvelsWithThumbnail = filterMarvelsWithoutThumbnail(
+        marvelData.data.results
+    );
     setMarvels(marvelsWithThumbnail);
   };
 
   return (
+      <div className="marvels-page" data-testid="marvels">
+        <h1 className="page-title">Welcome To Marvel Land</h1>
 
-    <div data-testid="marvels">
-      <h1>Welcome To Marvel Land</h1>
-      <div className="container">
-        <div className="row">
+        <div className="marvels-grid">
           {marvels.map((marvel, index) => {
             const { thumbnail, thumbnailExtention, name, id } = marvel;
             return (
-              <div key={id} data-testid={`marvelId-${index}`} className="col-md-4">
-                <div data-testid={`marvel-link-${id}`}>
-                  <Link to={`/marvels/${id}`}>
-                    <img src={buildThumbnailPath(thumbnail, thumbnailExtention)}
-                      alt={name}
-                      className="img-responsive img-thumbnail"
-                      data-testid={`marvel-image-${index}`}
+                <div
+                    key={id}
+                    className="marvel-card"
+                    data-testid={`marvelId-${index}`}
+                >
+                  <Link
+                      to={`/marvels/${id}`}
+                      className="marvel-link"
+                      data-testid={`marvel-link-${id}`}
+                  >
+                    <img
+                        src={buildThumbnailPath(thumbnail, thumbnailExtention)}
+                        alt={name}
+                        className="marvel-image"
+                        data-testid={`marvel-image-${index}`}
                     />
+                    <h3 className="marvel-name" data-testid={`marvel-name-${index}`}>
+                      {name}
+                    </h3>
                   </Link>
-                  <h3 data-testid={`marvel-name-${index}`}>{name}</h3>
                 </div>
-              </div>
             );
           })}
         </div>
       </div>
-    </div>
   );
 };
 
