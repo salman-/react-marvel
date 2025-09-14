@@ -17,6 +17,7 @@ const Marvel = () => {
         const { getCharacterById } = path();
         let api = buildApiEndpoint(getCharacterById);
         api = api.replace("{characterId}", id);
+        console.log(api);
 
         const response = await fetch(api);
         const jsonData = await response.json();
