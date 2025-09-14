@@ -1,0 +1,19 @@
+.footer {
+  background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
+  color: #bbb;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.9rem;
+  border-top: 2px solid #e62429; /* Marvel red accent */
+  margin-top: 2rem;
+}
+
+.footer-text {
+  margin: 0.3rem 0;
+  line-height: 1.5;
+}
+
+.highlight {
+  color: #e62429;
+  font-weight: 600;
+}
