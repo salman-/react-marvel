@@ -23,9 +23,9 @@
 
 /* Character image */
 .marvel-character img {
-  width: 300px;       /* Fixed width */
-  height: 400px;      /* Fixed height */
-  object-fit: cover;  /* Ensure image fills the box without distortion */
+  width: 300px; /* Fixed width */
+  height: 400px; /* Fixed height */
+  object-fit: cover; /* Ensure image fills the box without distortion */
   border-radius: 1rem;
   border: 2px solid #e62429;
   transition: transform 0.3s ease, box-shadow 0.3s ease;

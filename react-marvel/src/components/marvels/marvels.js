@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import marvelData from "../../assets/offlineMarvels.json";
-import { filterMarvelsWithoutThumbnail } from "../../services/marvelService";
-import { buildThumbnailPath } from "../../services/helperUtils";
+import {filterMarvelsWithoutThumbnail} from "../../services/marvelService";
+import {buildThumbnailPath} from "../../services/helperUtils";
 import "./Marvels.css";
 
 const Marvels = () => {
@@ -25,7 +25,7 @@ const Marvels = () => {
 
         <div className="marvels-grid">
           {marvels.map((marvel, index) => {
-            const { thumbnail, thumbnailExtention, name, id } = marvel;
+            const {thumbnail, thumbnailExtention, name, id} = marvel;
             return (
                 <div
                     key={id}
@@ -43,7 +43,8 @@ const Marvels = () => {
                         className="marvel-image"
                         data-testid={`marvel-image-${index}`}
                     />
-                    <h3 className="marvel-name" data-testid={`marvel-name-${index}`}>
+                    <h3 className="marvel-name"
+                        data-testid={`marvel-name-${index}`}>
                       {name}
                     </h3>
                   </Link>
