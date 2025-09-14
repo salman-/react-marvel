@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import marvelData from "../../assets/offlineMarvels.json";
 import { filterMarvelsWithoutThumbnail } from "../../services/marvelService";
-import { buildThumbnailPath } from "../../services/services";
+import { buildThumbnailPath } from "../../services/helperUtils";
 import "./Marvels.css";
 
 const Marvels = () => {
