@@ -69,8 +69,8 @@
   height: 100%;
 }
 
-/* Pagination container */
-.pagination {
+/* Shuffle container */
+.shuffler {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,9 +79,9 @@
   gap: 0.5rem;
 }
 
-/* Page numbers */
-.page-number,
-.page-btn {
+/* Shuffle btn */
+
+.shuffle-btn {
   background: #1a1a1a;
   color: #fff;
   border: 1px solid #e62429;
@@ -91,19 +91,12 @@
   transition: all 0.2s ease-in-out;
 }
 
-.page-number:hover,
-.page-btn:hover {
+.shuffle-btn:hover {
   background: #e62429;
   color: #fff;
 }
 
-.page-number.active {
-  background: #e62429;
-  font-weight: bold;
-  transform: scale(1.05);
-}
-
-.page-btn:disabled {
+.shuffle-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
