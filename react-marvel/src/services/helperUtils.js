@@ -12,6 +12,13 @@ export const buildApiEndpoint = (path) => {
   return protocol + baseUrl + path + parameters;
 }
 
+export const buildApiEndpointWithOffset = (path, offset) => {
+  const {protocol, baseUrl} = environment();
+  const authParameters = buildAuthenticationParameters();
+  const limitAndOffsetParameters = buildRequestParameters(100, offset);
+  return protocol + baseUrl + path + authParameters + limitAndOffsetParameters;
+}
+
 export const buildAuthenticationParameters = () => {
   const {publicKey, privateKey} = environment();
   let timeStamp = new Date().getTime();
@@ -29,6 +36,12 @@ export const buildAuthenticationRequestParameters = (timeStamp, hash,
     apikey) => {
   return `?ts=${timeStamp}&apikey=${apikey}&hash=${hash}`
 }
+
+export const buildRequestParameters = (limit, offset) => {
+  return `&limit=${limit}&offset=${offset}`;
+}
+
+export const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 
 

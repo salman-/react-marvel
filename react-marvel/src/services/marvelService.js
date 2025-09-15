@@ -1,4 +1,8 @@
-import {buildApiEndpoint} from "./helperUtils";
+import {
+  buildApiEndpoint,
+  buildApiEndpointWithOffset,
+  delay
+} from "./helperUtils";
 import path from "./endpointsPath.js";
 
 export const randomlySelectMarvels = (marvelWithThumbnail) => {
@@ -11,7 +15,7 @@ export const randomlySelectMarvels = (marvelWithThumbnail) => {
 }
 
 export const filterMarvelsWithoutThumbnail = (characters) => {
-  let marvelWithThumbnail = [];
+  let marvelWithThumbnail = new Set();
   const limit = Math.min(characters.length, 100);
   for (let i = 0; i < limit; i++) {
 
@@ -23,11 +27,11 @@ export const filterMarvelsWithoutThumbnail = (characters) => {
       const marvel = {
         id: characters[i].id,
         thumbnail: characters[i].thumbnail.path,
-        thumbnailExtention: characters[i].thumbnail.extension,
+        thumbnailExtension: characters[i].thumbnail.extension,
         description: characters[i].description,
         name: characters[i].name
       };
-      marvelWithThumbnail.push(marvel);
+      marvelWithThumbnail.add(marvel);
     }
   }
   return marvelWithThumbnail;
@@ -37,45 +41,42 @@ export function doesNotContainSubstring(mainString, substring) {
   return mainString.indexOf(substring) === -1;
 }
 
-export const fetchAllCharacters = async () => {
-  const limit = 100;
-  let offset = 0;
-  let allCharacters = [];
-  let total = 1564;
-  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
+async function getAllCharactersUpToGivenIndex(offset) {
   const {getCharacters} = path();
-  let apiBase = buildApiEndpoint(getCharacters);
-  console.log("apiBase: " + apiBase);
+  let api = buildApiEndpointWithOffset(getCharacters, offset);
 
-  do {
-    const api = `${apiBase}?limit=${limit}&offset=${offset}`;
-    console.log(`Fetching characters: offset=${offset}`);
+  const response = await fetch(api);
+  const responseBody = await response.json();
 
-    const response = await fetch(api);
-    const data = await response.json();
+  return responseBody.data.results;
+}
 
-    const filtered = data.data.results.filter(
-        (char) => !char.thumbnail.path.includes("image_not_available")
-    );
+export const fetchAllCharacters = async () => {
+  let offset = 0;
+  const offsetIncrement = 100;
+  let total = 1564;
+  const allCharacters = new Set();
 
-    allCharacters = [...allCharacters, ...filtered];
-
-    total = data.data.total;
-    offset += limit;
-
-    // Wait 10 seconds before next request
-    if (offset < total) {
-      console.log("Waiting 10 seconds before next request...");
-      await delay(10000);
-    }
-  } while (offset < total);
-
-  console.log(`Fetched ${allCharacters.length} characters with thumbnails.`);
-
-  // Write remaining characters to chars.json
-  //fs.writeFileSync("chars.json", JSON.stringify(allCharacters, null, 2));
-  console.log("All characters with thumbnails saved to chars.json");
-
+  while (offset <= total) {
+    const characters = await getAllCharactersUpToGivenIndex(offset);
+    const charactersWithThumbNail = filterMarvelsWithoutThumbnail(characters);
+    console.log(
+        `Offset: ${offset} Fetched ${charactersWithThumbNail.size} characters with thumbnails.`);
+    offset += offsetIncrement;
+    await delay(10000);
+    charactersWithThumbNail.forEach(value => allCharacters.add(value));
+  }
+  console.log(`allCharacters: ${JSON.stringify([...allCharacters])}`);
   return allCharacters;
 };
+
+export async function getCharacterById(id) {
+  const {getCharacterById} = path();
+  let api = buildApiEndpoint(getCharacterById);
+  api = api.replace("{characterId}", id);
+
+  const response = await fetch(api);
+  const jsonData = await response.json();
+  return jsonData.data.results[0];
+
+}

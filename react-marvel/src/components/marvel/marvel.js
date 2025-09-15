@@ -1,8 +1,8 @@
 import {Link, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {buildApiEndpoint, buildThumbnailPath} from "../../services/helperUtils";
-import path from "./../../services/endpointsPath";
+import {buildThumbnailPath} from "../../services/helperUtils";
 import "./Marvel.css";
+import {getCharacterById} from "../../services/marvelService";
 
 const Marvel = () => {
   const [character, setCharacter] = useState({});
@@ -15,13 +15,7 @@ const Marvel = () => {
   }, [id]);
 
   const getCharacter = async (id) => {
-    const {getCharacterById} = path();
-    let api = buildApiEndpoint(getCharacterById);
-    api = api.replace("{characterId}", id);
-
-    const response = await fetch(api);
-    const jsonData = await response.json();
-    const marvel = jsonData.data.results[0];
+    const marvel = await getCharacterById(id);
 
     const characterName = marvel.name;
     const characterThumbnail = buildThumbnailPath(marvel.thumbnail.path,
