@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import marvelData from "../../assets/offlineMarvels.json";
-import {filterMarvelsWithoutThumbnail} from "../../services/marvelService";
+import marvelsWithThumbnail from "../../assets/offlineMarvels.json";
 import {buildThumbnailPath} from "../../services/helperUtils";
 import "./Marvels.css";
 
@@ -13,10 +12,8 @@ const Marvels = () => {
   }, []);
 
   const getMarvels = async () => {
-    const marvelsWithThumbnail = filterMarvelsWithoutThumbnail(
-        marvelData.data.results
-    );
-    setMarvels(marvelsWithThumbnail);
+    const uniqueMarvelsWithThumbnail = [...new Set(marvelsWithThumbnail)];
+    setMarvels(uniqueMarvelsWithThumbnail);
   };
 
   return (
