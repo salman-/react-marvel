@@ -6,8 +6,8 @@ const Header = () => {
   return (
       <header className="app-header">
         <nav className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
+          <Link to="/">Home |</Link>
+          <Link to="/about">About |</Link>
         </nav>
       </header>
   );

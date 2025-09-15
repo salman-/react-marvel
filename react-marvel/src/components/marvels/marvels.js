@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import marvelsWithThumbnail from "../../assets/offlineMarvels.json";
-import {buildThumbnailPath} from "../../services/helperUtils";
+import {buildThumbnailPath, shuffle} from "../../services/helperUtils";
 import "./Marvels.css";
 
 const Marvels = () => {
@@ -15,7 +15,8 @@ const Marvels = () => {
   }, []);
 
   const getMarvels = async () => {
-    const uniqueMarvelsWithThumbnail = [...new Set(marvelsWithThumbnail)];
+    let uniqueMarvelsWithThumbnail = [...new Set(marvelsWithThumbnail)];
+    uniqueMarvelsWithThumbnail = shuffle(uniqueMarvelsWithThumbnail);
     setMarvels(uniqueMarvelsWithThumbnail);
   };
 
