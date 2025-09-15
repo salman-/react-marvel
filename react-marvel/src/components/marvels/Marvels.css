@@ -4,17 +4,7 @@
   background: #0d0d0d;
   color: #fff;
   font-family: "Poppins", sans-serif;
-}
-
-/* Title */
-.page-title {
-  text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  color: #e62429; /* Marvel red */
-  letter-spacing: 1px;
-  font-weight: 700;
-  text-transform: uppercase;
+  border-radius: 10px;
 }
 
 /* Grid layout */
