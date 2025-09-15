@@ -1,0 +1,27 @@
+/* Header container */
+.app-header {
+  background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
+  color: #bbb;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* Navigation container */
+.nav-links {
+  display: flex; /* Horizontal layout */
+  gap: 1.5rem; /* Space between links */
+}
+
+/* Navigation links */
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #e62429;
+}

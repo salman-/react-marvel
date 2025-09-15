@@ -41,8 +41,6 @@ const Marvels = () => {
 
   return (
       <div className="marvels-page" data-testid="marvels">
-        <h1 className="page-title">Welcome To Marvel Land</h1>
-
         <div className="marvels-grid">
           {currentMarvels.map((marvel, index) => {
             const {thumbnail, thumbnailExtention, name, id} = marvel;

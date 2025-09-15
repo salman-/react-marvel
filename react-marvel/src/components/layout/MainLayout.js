@@ -1,11 +1,15 @@
+// MainLayout.js
 import React from "react";
 import {Outlet} from "react-router-dom";
-import Footer from "./../footer/Footer";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
+import "./MainLayout.css";
 
 const MainLayout = () => {
   return (
       <div className="App">
-        <Outlet/> {/* This is where routed pages will render */}
+        <Header/>
+        <Outlet/>
         <Footer/>
       </div>
   );
