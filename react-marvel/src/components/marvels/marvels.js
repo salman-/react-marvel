@@ -6,6 +6,9 @@ import "./Marvels.css";
 
 const Marvels = () => {
   const [marvels, setMarvels] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const itemsPerPage = 8;
 
   useEffect(() => {
     getMarvels();
@@ -16,12 +19,32 @@ const Marvels = () => {
     setMarvels(uniqueMarvelsWithThumbnail);
   };
 
+  // Pagination logic
+  const totalPages = Math.ceil(marvels.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentMarvels = marvels.slice(indexOfFirstItem, indexOfLastItem);
+
+  // Page numbers logic (show only 5 at a time)
+  const pageNumbers = [];
+  const maxPageNumbersToShow = 5;
+  let startPage = Math.max(1,
+      currentPage - Math.floor(maxPageNumbersToShow / 2));
+  let endPage = startPage + maxPageNumbersToShow - 1;
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(1, endPage - maxPageNumbersToShow + 1);
+  }
+  for (let i = startPage; i <= endPage; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
       <div className="marvels-page" data-testid="marvels">
         <h1 className="page-title">Welcome To Marvel Land</h1>
 
         <div className="marvels-grid">
-          {marvels.map((marvel, index) => {
+          {currentMarvels.map((marvel, index) => {
             const {thumbnail, thumbnailExtention, name, id} = marvel;
             return (
                 <div
@@ -48,6 +71,39 @@ const Marvels = () => {
                 </div>
             );
           })}
+        </div>
+
+        {/* Pagination */}
+        <div className="pagination">
+          <button
+              className="page-btn"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+
+          {pageNumbers.map((number) => (
+              <button
+                  key={number}
+                  onClick={() => setCurrentPage(number)}
+                  className={`page-number ${
+                      currentPage === number ? "active" : ""
+                  }`}
+              >
+                {number}
+              </button>
+          ))}
+
+          <button
+              className="page-btn"
+              onClick={() =>
+                  setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
         </div>
       </div>
   );
