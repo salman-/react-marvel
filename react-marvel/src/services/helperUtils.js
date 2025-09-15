@@ -17,7 +17,7 @@ export const buildAuthenticationParameters = () => {
   let timeStamp = new Date().getTime();
   const hash = generateHash(publicKey, privateKey, timeStamp);
 
-  return buildRequestParameters(timeStamp, hash, publicKey);
+  return buildAuthenticationRequestParameters(timeStamp, hash, publicKey);
 }
 
 export const generateHash = (publicKey, privateKey, timeStamp) => {
@@ -25,7 +25,8 @@ export const generateHash = (publicKey, privateKey, timeStamp) => {
   return CryptoJS.MD5(input).toString(CryptoJS.enc.Hex);
 }
 
-export const buildRequestParameters = (timeStamp, hash, apikey) => {
+export const buildAuthenticationRequestParameters = (timeStamp, hash,
+    apikey) => {
   return `?ts=${timeStamp}&apikey=${apikey}&hash=${hash}`
 }
 

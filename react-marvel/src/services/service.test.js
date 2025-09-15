@@ -1,12 +1,12 @@
 import {
-    buildApiEndpoint,
-    buildAuthenticationParameters,
-    buildRequestParameters,
-    generateHash
+  buildApiEndpoint,
+  buildAuthenticationParameters,
+  buildAuthenticationRequestParameters,
+  generateHash
 } from './helperUtils.js';
 import {
-    doesNotContainSubstring,
-    filterMarvelsWithoutThumbnail
+  doesNotContainSubstring,
+  filterMarvelsWithoutThumbnail
 } from './marvelService.js';
 import environment from '../environment/environment.js';
 import marvelData from '../assets/offlineMarvels.json';
@@ -37,7 +37,8 @@ describe('Check helper services', () => {
     const publicKey = 'random_key';
     const hash = 'random_string';
     const timeStamp = new Date().getTime();
-    const parametersString = buildRequestParameters(timeStamp, hash, publicKey);
+    const parametersString = buildAuthenticationRequestParameters(timeStamp,
+        hash, publicKey);
     const expectedString = `?ts=${timeStamp}&apikey=${publicKey}&hash=${hash}`;
     expect(parametersString).toBe(expectedString);
   });
