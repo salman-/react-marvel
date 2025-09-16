@@ -32,7 +32,7 @@ const Marvels = () => {
       <div className="marvels-page" data-testid="marvels">
         <div className="marvels-grid">
           {marvels.map((marvel, index) => {
-            const {thumbnail, thumbnailExtension, name, id} = marvel;
+            const {thumbnail, thumbnailExtension, name, id, url} = marvel;
             return (
                 <div
                     key={id}
@@ -40,7 +40,7 @@ const Marvels = () => {
                     data-testid={`marvelId-${index}`}
                 >
                   <Link
-                      to={`/marvels/${id}`}
+                      to={`${url}`}
                       className="marvel-link"
                       data-testid={`marvel-link-${id}`}
                   >
@@ -50,6 +50,12 @@ const Marvels = () => {
                         className="marvel-image"
                         data-testid={`marvel-image-${index}`}
                     />
+                  </Link>
+                  <Link
+                      to={`/marvels/${id}`}
+                      className="marvel-link"
+                      data-testid={`marvel-link-${id}`}
+                  >
                     <h3
                         className="marvel-name"
                         data-testid={`marvel-name-${index}`}
