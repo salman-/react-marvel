@@ -23,6 +23,12 @@
   transition: color 0.2s ease;
 }
 
+.separator {
+  margin: 0 0.5rem;
+  color: #666;
+}
+
+
 .nav-links a:hover {
   color: #e62429;
 }

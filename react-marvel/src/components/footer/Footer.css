@@ -9,9 +9,16 @@
 }
 
 .footer-text {
-  margin: 0.3rem 0;
+  display: inline; /* make <p> behave like inline text */
+  margin: 0 0.5rem; /* add some spacing between them */
   line-height: 1.5;
 }
+
+.separator {
+  margin: 0 0.5rem;
+  color: #666;
+}
+
 
 .highlight {
   color: #e62429;
