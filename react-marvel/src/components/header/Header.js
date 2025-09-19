@@ -10,22 +10,6 @@ const Header = () => {
           <div className="logo">
             <Link to="/">Marvel Land</Link>
           </div>
-
-          {/* Middle: Nav Links */}
-          <nav className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-
-          {/* Right: Search */}
-          <div className="search-container">
-            <input
-                type="text"
-                placeholder="Search Marvels..."
-                className="search-box"
-            />
-            <button className="search-btn">Search</button>
-          </div>
         </div>
       </header>
   );
