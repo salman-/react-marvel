@@ -1,18 +1,5 @@
-import {
-  buildApiEndpoint,
-  buildApiEndpointWithOffset,
-  delay
-} from "./helperUtils";
+import {buildApiEndpointWithOffset, delay} from "./helperUtils";
 import path from "./endpointsPath.js";
-
-export const randomlySelectMarvels = (marvelWithThumbnail) => {
-  let randomlySelectedMarvel = [];
-  for (let i = 0; i < 6; i++) {
-    let index = Math.floor(Math.random() * marvelWithThumbnail.length);
-    randomlySelectedMarvel.push(marvelWithThumbnail[index]);
-  }
-  return randomlySelectedMarvel;
-}
 
 // 1. Get the url of type "comiclink" or return default
 function getComicLinkUrl(character) {
@@ -87,14 +74,3 @@ export const fetchAllCharacters = async () => {
   console.log(`allCharacters: ${JSON.stringify([...allCharacters])}`);
   return allCharacters;
 };
-
-export async function getCharacterById(id) {
-  const {getCharacterById} = path();
-  let api = buildApiEndpoint(getCharacterById);
-  api = api.replace("{characterId}", id);
-
-  const response = await fetch(api);
-  const jsonData = await response.json();
-  return jsonData.data.results[0];
-
-}
