@@ -1,5 +1,3 @@
-import {buildApiEndpointWithOffset, delay} from "./helperUtils";
-import path from "./endpointsPath.js";
 
 // 1. Get the url of type "comiclink" or return default
 function getComicLinkUrl(character) {
@@ -45,32 +43,3 @@ export const filterMarvelsWithoutThumbnail = (characters) => {
 export function doesNotContainSubstring(mainString, substring) {
   return mainString.indexOf(substring) === -1;
 }
-
-async function getAllCharactersUpToGivenIndex(offset) {
-  const {getCharacters} = path();
-  let api = buildApiEndpointWithOffset(getCharacters, offset);
-
-  const response = await fetch(api);
-  const responseBody = await response.json();
-
-  return responseBody.data.results;
-}
-
-export const fetchAllCharacters = async () => {
-  let offset = 0;
-  const offsetIncrement = 100;
-  let total = 1564;
-  const allCharacters = new Set();
-
-  while (offset <= total) {
-    const characters = await getAllCharactersUpToGivenIndex(offset);
-    const charactersWithThumbNail = filterMarvelsWithoutThumbnail(characters);
-    console.log(
-        `Offset: ${offset} Fetched ${charactersWithThumbNail.size} characters with thumbnails.`);
-    offset += offsetIncrement;
-    await delay(10000);
-    charactersWithThumbNail.forEach(value => allCharacters.add(value));
-  }
-  console.log(`allCharacters: ${JSON.stringify([...allCharacters])}`);
-  return allCharacters;
-};

@@ -1,5 +1,5 @@
 import environment from '../environment/environment.js';
-import * as CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 
 export const buildThumbnailPath = (thumbnailPath, thumbnailExtension) => {
   const parameters = buildAuthenticationParameters();

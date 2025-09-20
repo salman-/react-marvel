@@ -1,6 +1,5 @@
 import {render, screen} from '@testing-library/react';
 import Marvels from './marvels';
-import {fetchAllCharacters} from "../../services/marvelService";
 
 describe('the landing page', () => {
 
@@ -20,9 +19,5 @@ describe('the landing page', () => {
 
   });
 
-  it('Downloads all the characters with thumbnail', async () => {
-    const uniqueCharactersWithThumbnails = await fetchAllCharacters();
-    console.log(uniqueCharactersWithThumbnails);
-  });
 
 });
