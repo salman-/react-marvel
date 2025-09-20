@@ -70,7 +70,7 @@ const Marvels = () => {
 
         <div className="shuffler">
           <button className="shuffle-btn" onClick={getMarvels}>
-            Shuffle Marvels
+            Shuffle
           </button>
         </div>
       </div>

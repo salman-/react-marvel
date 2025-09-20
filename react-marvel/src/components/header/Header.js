@@ -8,7 +8,7 @@ const Header = () => {
         <div className="header-content">
           {/* Left: Logo / Title */}
           <div className="logo">
-            <Link to="/">Marvel Land</Link>
+            <Link to="/">Legend Land</Link>
           </div>
         </div>
       </header>
